@@ -26,9 +26,10 @@ static const char* expected[] = {"bar", "foo", "main"};
 static int step = 0;
 static _Unwind_Reason_Code handler(struct _Unwind_Context* context, void* ref)
 {
-    if (step > 2) {
+    if (step > 2)
+    {
         return _URC_NORMAL_STOP;
-}
+    }
     struct dl_info dyldInfo;
     if (dladdr((void*) _Unwind_GetIP(context), &dyldInfo))
     {

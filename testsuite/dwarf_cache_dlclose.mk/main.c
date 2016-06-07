@@ -11,9 +11,10 @@ static bool fooInCache = false;
 static void callback(unw_word_t ip_start, unw_word_t ip_end, unw_word_t fde, unw_word_t mh)
 {
     // fprintf(stderr, "ip_start = 0x%llX, ip_end = 0x%llX\n", ip_start, ip_end);
-    if ((unw_word_t)(long) foo == ip_start) {
+    if ((unw_word_t)(long) foo == ip_start)
+    {
         fooInCache = true;
-}
+    }
 }
 
 int main()
