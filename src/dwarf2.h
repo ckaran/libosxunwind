@@ -26,8 +26,8 @@
    Copyright (c) 1992, 1993 UNIX International, Inc.
 */
 
-#ifndef __DWARF2__
-#define __DWARF2__
+#ifndef _USERS_CROSSBAR_DOCUMENTS_PROGRAMMING_JULIA_LIBOSXUNWIND_CEM_SRC_DWARF2_H
+#define _USERS_CROSSBAR_DOCUMENTS_PROGRAMMING_JULIA_LIBOSXUNWIND_CEM_SRC_DWARF2_H
 
 // dwarf unwind instructions
 enum

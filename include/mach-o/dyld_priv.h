@@ -21,8 +21,8 @@
  *
  * @APPLE_LICENSE_HEADER_END@
  */
-#ifndef _MACH_O_DYLD_PRIV_H_
-#define _MACH_O_DYLD_PRIV_H_
+#ifndef MACH_O_DYLD_PRIV_H
+#define MACH_O_DYLD_PRIV_H
 
 #include <Availability.h>
 #include <mach-o/dyld.h>
@@ -204,4 +204,4 @@ extern bool dyld_shared_cache_some_image_overridden();
 }
 #endif /* __cplusplus */
 
-#endif /* _MACH_O_DYLD_PRIV_H_ */
+#endif // MACH_O_DYLD_PRIV_H

@@ -29,8 +29,8 @@
  *
  */
 
-#ifndef __LIBUNWIND__
-#define __LIBUNWIND__
+#ifndef LIBUNWIND_H
+#define LIBUNWIND_H
 
 #include <Availability.h>
 #include <mach/mach_types.h>

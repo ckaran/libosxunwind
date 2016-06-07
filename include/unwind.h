@@ -29,8 +29,8 @@
  *
  */
 
-#ifndef __UNWIND_H__
-#define __UNWIND_H__
+#ifndef UNWIND_H
+#define UNWIND_H
 
 #include <Availability.h>
 #include <stddef.h>
@@ -198,4 +198,4 @@ extern void* __deregister_frame_info_bases(const void* fde) __attribute__((unava
 }
 #endif
 
-#endif // __UNWIND_H__
+#endif // UNWIND_H
