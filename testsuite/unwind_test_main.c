@@ -17,8 +17,9 @@ int main()
     for (p = unwind_tester_list; *p != NULL; ++p)
     {
         // fprintf(stderr, "unwind_tester(%p)\n", *p);
-        if (unwind_tester(*p))
+        if (unwind_tester(*p)) {
             return 1;
+}
     }
     return 0;
 }

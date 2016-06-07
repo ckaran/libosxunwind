@@ -29,8 +29,10 @@ int main()
 
     _Unwind_Reason_Code result = _Unwind_RaiseException(&ex);
 
-    if (result == _URC_END_OF_STACK)
+    if (result == _URC_END_OF_STACK) {
         return 0;
-    else
+    }
+    else {
         return 1;
+}
 }

@@ -91,10 +91,12 @@ EXPORT void* _Unwind_FindEnclosingFunction(void* pc)
     unw_getcontext(&uc);
     unw_init_local(&cursor, &uc);
     unw_set_reg(&cursor, UNW_REG_IP, (unw_word_t)(long) pc);
-    if (unw_get_proc_info(&cursor, &info) == UNW_ESUCCESS)
+    if (unw_get_proc_info(&cursor, &info) == UNW_ESUCCESS) {
         return (void*) (long) info.start_ip;
-    else
+    }
+    else {
         return NULL;
+}
 }
 
 //

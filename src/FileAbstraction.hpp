@@ -25,8 +25,8 @@
 #define __FILE_ABSTRACTION__
 
 #include <libkern/OSByteOrder.h>
-#include <stdint.h>
-#include <string.h>
+#include <cstdint>
+#include <cstring>
 
 #ifdef __OPTIMIZE__
 #define INLINE __attribute__((always_inline))

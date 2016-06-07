@@ -408,7 +408,7 @@ struct unwind_info_compressed_second_level_page_header
     // encodings array
 };
 
-#define UNWIND_INFO_COMPRESSED_ENTRY_FUNC_OFFSET(entry) (entry & 0x00FFFFFF)
-#define UNWIND_INFO_COMPRESSED_ENTRY_ENCODING_INDEX(entry) ((entry >> 24) & 0xFF)
+#define UNWIND_INFO_COMPRESSED_ENTRY_FUNC_OFFSET(entry) ((entry) & 0x00FFFFFF)
+#define UNWIND_INFO_COMPRESSED_ENTRY_ENCODING_INDEX(entry) (((entry) >> 24) & 0xFF)
 
 #endif

@@ -76,8 +76,9 @@ static _Unwind_Reason_Code unwind_phase1(unw_context_t* uc, struct _Unwind_Excep
         {
             char functionName[512];
             unw_word_t offset;
-            if ((unw_get_proc_name(&cursor1, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip))
+            if ((unw_get_proc_name(&cursor1, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip)) {
                 strcpy(functionName, ".anonymous.");
+}
             unw_word_t pc;
             unw_get_reg(&cursor1, UNW_REG_IP, &pc);
             DEBUG_PRINT_UNWINDING("unwind_phase1(ex_ojb=%p): pc=0x%llX, start_ip=0x%llX, func=%s, lsda=0x%llX, personality=0x%llX\n",
@@ -160,8 +161,9 @@ static _Unwind_Reason_Code unwind_phase2(unw_context_t* uc, struct _Unwind_Excep
         {
             char functionName[512];
             unw_word_t offset;
-            if ((unw_get_proc_name(&cursor2, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip))
+            if ((unw_get_proc_name(&cursor2, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip)) {
                 strcpy(functionName, ".anonymous.");
+}
             DEBUG_PRINT_UNWINDING("unwind_phase2(ex_ojb=%p): start_ip=0x%llX, func=%s, sp=0x%llX, lsda=0x%llX, personality=0x%llX\n",
                                   exception_object,
                                   frameInfo.start_ip,
@@ -176,8 +178,9 @@ static _Unwind_Reason_Code unwind_phase2(unw_context_t* uc, struct _Unwind_Excep
         {
             __personality_routine p = (__personality_routine)(long) (frameInfo.handler);
             _Unwind_Action action = _UA_CLEANUP_PHASE;
-            if (sp == exception_object->private_2)
+            if (sp == exception_object->private_2) {
                 action = (_Unwind_Action)(_UA_CLEANUP_PHASE | _UA_HANDLER_FRAME); // tell personality this was the frame it marked in phase 1
+}
             _Unwind_Reason_Code personalityResult = (*p)(1, action, exception_object->exception_class, exception_object, (struct _Unwind_Context*) (&cursor2));
             switch (personalityResult)
             {
@@ -239,8 +242,9 @@ static _Unwind_Reason_Code unwind_phase2_forced(unw_context_t* uc, struct _Unwin
         {
             char functionName[512];
             unw_word_t offset;
-            if ((unw_get_proc_name(&cursor2, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip))
+            if ((unw_get_proc_name(&cursor2, functionName, 512, &offset) != UNW_ESUCCESS) || (frameInfo.start_ip + offset > frameInfo.end_ip)) {
                 strcpy(functionName, ".anonymous.");
+}
             DEBUG_PRINT_UNWINDING(
                 "unwind_phase2_forced(ex_ojb=%p): start_ip=0x%llX, func=%s, lsda=0x%llX, personality=0x%llX\n", exception_object, frameInfo.start_ip, functionName, frameInfo.lsda, frameInfo.handler);
         }
@@ -304,8 +308,9 @@ EXPORT _Unwind_Reason_Code _Unwind_RaiseException(struct _Unwind_Exception* exce
 
     // phase 1: the search phase
     _Unwind_Reason_Code phase1 = unwind_phase1(&uc, exception_object);
-    if (phase1 != _URC_NO_REASON)
+    if (phase1 != _URC_NO_REASON) {
         return phase1;
+}
 
     // phase 2: the clean up phase
     return unwind_phase2(&uc, exception_object);
@@ -329,10 +334,11 @@ EXPORT void _Unwind_Resume(struct _Unwind_Exception* exception_object)
     unw_context_t uc;
     unw_getcontext(&uc);
 
-    if (exception_object->private_1 != 0)
+    if (exception_object->private_1 != 0) {
         unwind_phase2_forced(&uc, exception_object, (_Unwind_Stop_Fn) exception_object->private_1, (void*) exception_object->private_2);
-    else
+    } else {
         unwind_phase2(&uc, exception_object);
+}
 
     // clients assume _Unwind_Resume() does not return, so all we can do is abort.
     ABORT("_Unwind_Resume() can't return");
@@ -365,13 +371,15 @@ EXPORT uintptr_t _Unwind_GetLanguageSpecificData(struct _Unwind_Context* context
     unw_cursor_t* cursor = (unw_cursor_t*) context;
     unw_proc_info_t frameInfo;
     uintptr_t result = 0;
-    if (unw_get_proc_info(cursor, &frameInfo) == UNW_ESUCCESS)
+    if (unw_get_proc_info(cursor, &frameInfo) == UNW_ESUCCESS) {
         result = frameInfo.lsda;
+}
     DEBUG_PRINT_API("_Unwind_GetLanguageSpecificData(context=%p) => 0x%lX\n", context, result);
     if (result != 0)
     {
-        if (*((uint8_t*) result) != 0xFF)
+        if (*((uint8_t*) result) != 0xFF) {
             DEBUG_MESSAGE("lsda at 0x%lX does not start with 0xFF\n", result);
+}
     }
     return result;
 }
@@ -428,8 +436,9 @@ EXPORT uintptr_t _Unwind_GetRegionStart(struct _Unwind_Context* context)
     unw_cursor_t* cursor = (unw_cursor_t*) context;
     unw_proc_info_t frameInfo;
     uintptr_t result = 0;
-    if (unw_get_proc_info(cursor, &frameInfo) == UNW_ESUCCESS)
+    if (unw_get_proc_info(cursor, &frameInfo) == UNW_ESUCCESS) {
         result = frameInfo.start_ip;
+}
     DEBUG_PRINT_API("_Unwind_GetRegionStart(context=%p) => 0x%lX\n", context, result);
     return result;
 }
@@ -440,8 +449,9 @@ EXPORT uintptr_t _Unwind_GetRegionStart(struct _Unwind_Context* context)
 EXPORT void _Unwind_DeleteException(struct _Unwind_Exception* exception_object)
 {
     DEBUG_PRINT_API("_Unwind_DeleteException(ex_obj=%p)\n", exception_object);
-    if (exception_object->exception_cleanup != NULL)
+    if (exception_object->exception_cleanup != NULL) {
         (*exception_object->exception_cleanup)(_URC_FOREIGN_EXCEPTION_CAUGHT, exception_object);
+}
 }
 
 //
