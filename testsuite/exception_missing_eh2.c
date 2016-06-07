@@ -7,8 +7,9 @@ extern int foo();
 
 int global;
 
-int bar() { 
-	int x = foo();
-	++global;	// to prevent tail call optimization
-	return x; 
+int bar()
+{
+    int x = foo();
+    ++global; // to prevent tail call optimization
+    return x;
 }
